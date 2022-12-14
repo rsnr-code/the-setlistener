@@ -1,6 +1,7 @@
 import { useEffect, useState, Fragment } from "react";
 import axios from "axios";
 import SpotifyWebApi from "spotify-web-api-node";
+
 import SpotifyUserDetails from "./SpotifyUserDetails";
 import SearchArtist from "./ArtistSearch";
 import SetlistInfo from "./SetlistInfo";
@@ -121,6 +122,7 @@ const Main = () => {
         console.error(err);
       });
 
+    setSearchKey("");
     setAlertPopup(false);
   };
 
@@ -129,8 +131,8 @@ const Main = () => {
     let trackId = [];
 
     if (songArr) {
-      songArr.forEach(async (element) => {
-        await spotifyApi.searchTracks(element).then(
+      songArr.forEach(async (song) => {
+        await spotifyApi.searchTracks(song).then(
           function (data) {
             trackId.push(data.body.tracks.items[0].uri);
           },
@@ -165,7 +167,6 @@ const Main = () => {
         }
       );
 
-    // Add tracks to playlist
     await fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
       method: "POST",
       headers: {
@@ -173,7 +174,14 @@ const Main = () => {
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({ uris: trackIdArr }),
-    });
+    }).then(
+      function (data) {
+        console.log("Tracks added!");
+      },
+      function (err) {
+        console.log("Something went wrong!", err);
+      }
+    );
 
     // Adding tracks to created playlist
     // await spotifyApi.addTracksToPlaylist(playlistId, trackIdArr).then(

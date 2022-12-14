@@ -1,10 +1,11 @@
 import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router } from "react-router-dom";
-import Main from "./components/Main";
 import { useEffect, useState } from "react";
-import Header from "./components/Layout/Header";
+
+import Header from "./components/Header";
 import Homepage from "./components/Homepage";
+import Main from "./components/Main";
 
 function App() {
   const [token, setToken] = useState("");

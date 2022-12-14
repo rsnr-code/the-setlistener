@@ -35,18 +35,20 @@ const SetlistInfo = (props) => {
                         View Setlist
                       </button>
                     </h2>
-    
-                    {setlist.map((song, i) => (
-                      <div
+
+                    <div
                         id="question-one"
                         className="accordion-collapse collapse"
                         data-bs-parent="#questions"
                       >
-                        <div className="accordion-body" key={song[i]}>
+                    {setlist.map((song, i) => (
+                     
+                        <div className="accordion-body" key={i}>
                           {song}
                         </div>
-                      </div>
+                      
                     ))}
+                    </div>
                   </div>
                 </div>
               ) : (
